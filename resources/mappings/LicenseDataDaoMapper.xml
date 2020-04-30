@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henan.dao.LicenseDataDao">
+
+  <select id="selectByParams" parameterType="Map" resultType="LicenseDetail">
+    SELECT
+		t1.*,
+		t2.id as license_id,
+		t2.`issue_unit`,
+	    t2.`issue_unitname`,
+	    t2.`area_code`,
+	    t2.`licence_type_code`
+	FROM
+		lic_license_data t1
+	LEFT JOIN lic_license t2 on t1.`code`=t2.`code`
+	WHERE
+		1 = 1
+    <if test="licenseNo !=null and licenseNo !=''">
+    	and t1.license_no = #{licenseNo}
+    </if>
+    <if test="code !=null and code !=''">
+    	and t1.`code` = #{code}
+    </if>
+    and t1.canceled =0  LIMIT 1
+  </select>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/data/mongo
+    	http://www.springframework.org/schema/data/mongo/spring-mongo-1.8.xsd
+    	http://www.springframework.org/schema/data/repository
+        http://www.springframework.org/schema/data/repository/spring-repository-1.8.xsd" 
+    	default-autowire="byType">
+
+	<!-- mongodb 配置(有密码) -->
+	
+	<!-- <bean id="serverAddress" class="com.mongodb.ServerAddress">
+    	<constructor-arg name="host" value="10.10.126.216" />
+    	<constructor-arg name="port" value="20301" />
+    </bean>
+    
+    <bean id="credentials" class="com.mongodb.MongoCredential" factory-method="createScramSha1Credential">
+    	<constructor-arg name="userName" value="devAdmin"></constructor-arg>
+    	<constructor-arg name="source" value="admin"></constructor-arg>
+    	<constructor-arg name="password" value="123abc"></constructor-arg>
+    </bean>
+    
+    <bean id="mongo" class="com.mongodb.MongoClient">
+    	<constructor-arg name="addr" ref="serverAddress"></constructor-arg>
+    	<constructor-arg name="credentialsList" ref="credentials"></constructor-arg>
+    </bean>
+
+    <bean id="mongoTemplate" class="cn.tyky.jeesystem.dzzz.common.utils.MongoInit">
+        <constructor-arg ref="mongo"/>
+        <constructor-arg name="databaseName" value="dzzz"/>
+    </bean> -->
+    
+    <!-- mongodb 配置(无密码) -->
+    <!-- <mongo:mongo id="mongo" host="59.215.226.203" port="20400" />  -->
+    <!-- <mongo:mongo id="mongo" host="220.197.219.9" port="20400" />  -->
+   <!-- <mongo:mongo id="mongo" host="118.89.29.157" port="27017" />-->
+	 <mongo:mongo id="mongo" host="localhost" port="27017" />
+	<mongo:db-factory id="mongoDbFactory" dbname="dzzz-core" mongo-ref="mongo" />
+	
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+	</bean>
+
+</beans>

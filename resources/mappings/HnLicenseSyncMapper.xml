@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henan.dao.HnLicenseSyncMapper">
+  <resultMap id="BaseResultMap" type="HnLicenseSync">
+    <id column="license_file_number" jdbcType="VARCHAR" property="licenseFileNumber" />
+    <result column="catalog_id" jdbcType="VARCHAR" property="catalogId" />
+    <result column="license_number" jdbcType="VARCHAR" property="licenseNumber" />
+    <result column="license_name" jdbcType="VARCHAR" property="licenseName" />
+    <result column="issue_date" jdbcType="DATE" property="issueDate" />
+    <result column="valid_time_begin" jdbcType="DATE" property="validTimeBegin" />
+    <result column="valid_time_end" jdbcType="DATE" property="validTimeEnd" />
+    <result column="issue_unit" jdbcType="VARCHAR" property="issueUnit" />
+    <result column="issue_unitname" jdbcType="VARCHAR" property="issueUnitname" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="holder" jdbcType="VARCHAR" property="holder" />
+    <result column="holder_code" jdbcType="VARCHAR" property="holderCode" />
+    <result column="category" jdbcType="INTEGER" property="category" />
+    <result column="whose" jdbcType="INTEGER" property="whose" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="sync_state" jdbcType="INTEGER" property="syncState" />
+    <result column="sync_date" jdbcType="TIMESTAMP" property="syncDate" />
+    <result column="input_date" jdbcType="VARCHAR" property="inputDate" />
+    
+    <result column="file_type" jdbcType="VARCHAR" property="fileType" />
+    <result column="licence_type" jdbcType="VARCHAR" property="licenceType" />
+    <result column="licence_type_code" jdbcType="VARCHAR" property="licenceTypeCode" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="HnLicenseSyncWithBLOBs">
+    <result column="license_file" jdbcType="LONGVARBINARY" property="licenseFile" />
+    <result column="new_add_metadata" jdbcType="LONGVARCHAR" property="newAddMetadata" />
+    <result column="license_base_image" jdbcType="LONGVARBINARY" property="licenseBaseImage" />
+    <result column="rule_num" jdbcType="VARCHAR" property="rule" />
+    <result column="object_id" jdbcType="VARCHAR" property="objectId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    license_file_number, catalog_id, license_number, license_name, issue_date, valid_time_begin, 
+    valid_time_end, issue_unit, issue_unitname, area_code, holder, holder_code, category, 
+    whose, state, create_date, sync_state, sync_date
+  </sql>
+  <sql id="Blob_Column_List">
+    license_file, new_add_metadata, license_base_image
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from hn_license_sync
+    where license_file_number = #{licenseFileNumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hn_license_sync
+    where license_file_number = #{licenseFileNumber,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="HnLicenseSyncWithBLOBs">
+    insert into hn_license_sync (license_file_number, catalog_id, license_number, 
+      license_name, issue_date, valid_time_begin, 
+      valid_time_end, issue_unit, issue_unitname, 
+      area_code, holder, holder_code, 
+      category, whose, state, 
+      create_date, sync_state, sync_date, 
+      license_file, new_add_metadata, 
+      license_base_image,file_type,license_type,license_type_code)
+    values (#{licenseFileNumber,jdbcType=VARCHAR}, #{catalogId,jdbcType=VARCHAR}, #{licenseNumber,jdbcType=VARCHAR}, 
+      #{licenseName,jdbcType=VARCHAR}, #{issueDate,jdbcType=DATE}, #{validTimeBegin,jdbcType=DATE}, 
+      #{validTimeEnd,jdbcType=DATE}, #{issueUnit,jdbcType=VARCHAR}, #{issueUnitname,jdbcType=VARCHAR}, 
+      #{areaCode,jdbcType=VARCHAR}, #{holder,jdbcType=VARCHAR}, #{holderCode,jdbcType=VARCHAR}, 
+      #{category,jdbcType=INTEGER}, #{whose,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{syncState,jdbcType=INTEGER}, #{syncDate,jdbcType=TIMESTAMP}, 
+      #{licenseFile,jdbcType=LONGVARBINARY}, #{newAddMetadata,jdbcType=LONGVARCHAR}, 
+      #{licenseBaseImage,jdbcType=LONGVARBINARY},#{fileType,jdbcType=LONGVARBINARY},
+      #{licenceType,jdbcType=LONGVARBINARY},#{licenceTypeCode,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="HnLicenseSyncWithBLOBs">
+    insert into hn_license_sync
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="licenseFileNumber != null">
+        license_file_number,
+      </if>
+      <if test="catalogId != null">
+        catalog_id,
+      </if>
+      <if test="licenseNumber != null">
+        license_number,
+      </if>
+      <if test="licenseName != null">
+        license_name,
+      </if>
+      <if test="issueDate != null">
+        issue_date,
+      </if>
+      <if test="validTimeBegin != null">
+        valid_time_begin,
+      </if>
+      <if test="validTimeEnd != null">
+        valid_time_end,
+      </if>
+      <if test="issueUnit != null">
+        issue_unit,
+      </if>
+      <if test="issueUnitname != null">
+        issue_unitname,
+      </if>
+      <if test="areaCode != null">
+        area_code,
+      </if>
+      <if test="holder != null">
+        holder,
+      </if>
+      <if test="holderCode != null">
+        holder_code,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="whose != null">
+        whose,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="syncState != null">
+        sync_state,
+      </if>
+      <if test="syncDate != null">
+        sync_date,
+      </if>
+      <if test="licenseFile != null">
+        license_file,
+      </if>
+      <if test="newAddMetadata != null">
+        new_add_metadata,
+      </if>
+      <if test="licenseBaseImage != null">
+        license_base_image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="licenseFileNumber != null">
+        #{licenseFileNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogId != null">
+        #{catalogId,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNumber != null">
+        #{licenseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseName != null">
+        #{licenseName,jdbcType=VARCHAR},
+      </if>
+      <if test="issueDate != null">
+        #{issueDate,jdbcType=DATE},
+      </if>
+      <if test="validTimeBegin != null">
+        #{validTimeBegin,jdbcType=DATE},
+      </if>
+      <if test="validTimeEnd != null">
+        #{validTimeEnd,jdbcType=DATE},
+      </if>
+      <if test="issueUnit != null">
+        #{issueUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="issueUnitname != null">
+        #{issueUnitname,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="holder != null">
+        #{holder,jdbcType=VARCHAR},
+      </if>
+      <if test="holderCode != null">
+        #{holderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="whose != null">
+        #{whose,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="syncState != null">
+        #{syncState,jdbcType=INTEGER},
+      </if>
+      <if test="syncDate != null">
+        #{syncDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="licenseFile != null">
+        #{licenseFile,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="newAddMetadata != null">
+        #{newAddMetadata,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="licenseBaseImage != null">
+        #{licenseBaseImage,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="HnLicenseSyncWithBLOBs">
+    update hn_license_sync
+    <set>
+      <if test="catalogId != null">
+        catalog_id = #{catalogId,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNumber != null">
+        license_number = #{licenseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseName != null">
+        license_name = #{licenseName,jdbcType=VARCHAR},
+      </if>
+      <if test="issueDate != null">
+        issue_date = #{issueDate,jdbcType=DATE},
+      </if>
+      <if test="validTimeBegin != null">
+        valid_time_begin = #{validTimeBegin,jdbcType=DATE},
+      </if>
+      <if test="validTimeEnd != null">
+        valid_time_end = #{validTimeEnd,jdbcType=DATE},
+      </if>
+      <if test="issueUnit != null">
+        issue_unit = #{issueUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="issueUnitname != null">
+        issue_unitname = #{issueUnitname,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="holder != null">
+        holder = #{holder,jdbcType=VARCHAR},
+      </if>
+      <if test="holderCode != null">
+        holder_code = #{holderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="whose != null">
+        whose = #{whose,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="syncState != null">
+        sync_state = #{syncState,jdbcType=INTEGER},
+      </if>
+      <if test="syncDate != null">
+        sync_date = #{syncDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="licenseFile != null">
+        license_file = #{licenseFile,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="newAddMetadata != null">
+        new_add_metadata = #{newAddMetadata,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="licenseBaseImage != null">
+        license_base_image = #{licenseBaseImage,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where license_file_number = #{licenseFileNumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="HnLicenseSyncWithBLOBs">
+    update hn_license_sync
+    set catalog_id = #{catalogId,jdbcType=VARCHAR},
+      license_number = #{licenseNumber,jdbcType=VARCHAR},
+      license_name = #{licenseName,jdbcType=VARCHAR},
+      issue_date = #{issueDate,jdbcType=DATE},
+      valid_time_begin = #{validTimeBegin,jdbcType=DATE},
+      valid_time_end = #{validTimeEnd,jdbcType=DATE},
+      issue_unit = #{issueUnit,jdbcType=VARCHAR},
+      issue_unitname = #{issueUnitname,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      holder = #{holder,jdbcType=VARCHAR},
+      holder_code = #{holderCode,jdbcType=VARCHAR},
+      category = #{category,jdbcType=INTEGER},
+      whose = #{whose,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      sync_state = #{syncState,jdbcType=INTEGER},
+      sync_date = #{syncDate,jdbcType=TIMESTAMP},
+      license_file = #{licenseFile,jdbcType=LONGVARBINARY},
+      new_add_metadata = #{newAddMetadata,jdbcType=LONGVARCHAR},
+      license_base_image = #{licenseBaseImage,jdbcType=LONGVARBINARY}
+    where license_file_number = #{licenseFileNumber,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="HnLicenseSync">
+    update hn_license_sync
+    set catalog_id = #{catalogId,jdbcType=VARCHAR},
+      license_number = #{licenseNumber,jdbcType=VARCHAR},
+      license_name = #{licenseName,jdbcType=VARCHAR},
+      issue_date = #{issueDate,jdbcType=DATE},
+      valid_time_begin = #{validTimeBegin,jdbcType=DATE},
+      valid_time_end = #{validTimeEnd,jdbcType=DATE},
+      issue_unit = #{issueUnit,jdbcType=VARCHAR},
+      issue_unitname = #{issueUnitname,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      holder = #{holder,jdbcType=VARCHAR},
+      holder_code = #{holderCode,jdbcType=VARCHAR},
+      category = #{category,jdbcType=INTEGER},
+      whose = #{whose,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      sync_state = #{syncState,jdbcType=INTEGER},
+      sync_date = #{syncDate,jdbcType=TIMESTAMP}
+    where license_file_number = #{licenseFileNumber,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="findByLimit" parameterType="Map" resultMap="ResultMapWithBLOBs">
+    select * from (SELECT
+    	t1.object_id,
+    	t1.id,
+		t1.`code` as catalog_id,
+	    t1.license_no as license_number,
+	    t1.hold_by as holder,
+	    t1.hold_by_no as holder_code,
+	    case when t2.`type`=2 then 0 else 1 end  as category,
+		t2.`name` as license_name,
+		t1.license_version,
+		DATE_FORMAT(t1.input_date,"%Y-%c-%e") as issue_date,
+		DATE_FORMAT(t1.input_date,"%Y-%c-%e") as valid_time_begin,
+		
+		CASE WHEN t1.expiry_date > '2050-12-31' THEN null
+		ELSE DATE_FORMAT(t1.expiry_date,"%Y-%c-%e") end as valid_time_end,
+		case when t1.`status`=4 then 5 
+		else 11 end as state,
+		case when t2.`principal`='机构' or t2.`principal`='法人' then 1 
+		when t2.`principal`='自然人或法人' then 1 
+		else 0 end as  whose,
+		t4.social_code `issue_unit`,
+	    t2.`issue_unitname`,
+	    t2.`area_code`,
+	    t2.`licence_type_code`,
+	    t1.input_date,
+		t3.rule_num
+	FROM
+		lic_license_data t1
+	LEFT JOIN
+		lic_license t2 on t1.`code` = t2.`code`
+	LEFT JOIN 
+		lic_hc_seal_rule t3 on t3.`code` = t2.`code`
+	LEFT JOIN 
+		sdwxx t4 on t4.`issue_unit` = t2.`issue_unit`	
+    where  canceled =0
+    
+    <if test="code !=null and code != '' ">
+    	and t2.`code` = #{code}
+    </if>
+    order by t1.id desc) a
+    where a.id not in (SELECT substring(license_file_number,-14,10)+0  FROM hn_license_sync)
+    limit 0,10
+  </select>
+  
+  <update id="saveLicense" parameterType="java.util.Map">
+  update lic_license_data set `status`=  #{status,jdbcType=VARCHAR}  where  `license_no` = #{licenseNo,jdbcType=VARCHAR} and `code` = #{code,jdbcType=VARCHAR} 
+  </update>
+</mapper>

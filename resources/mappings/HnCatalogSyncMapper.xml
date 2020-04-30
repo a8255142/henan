@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henan.dao.HnCatalogSyncMapper">
+  <resultMap id="BaseResultMap" type="com.henan.entity.HnCatalogSync">
+    <id column="catalog_no" jdbcType="VARCHAR" property="catalogNo" />
+    <result column="license_name" jdbcType="VARCHAR" property="licenseName" />
+    <result column="license_type" jdbcType="VARCHAR" property="licenseType" />
+    <result column="licence_type_code" jdbcType="VARCHAR" property="licenceTypeCode" />
+    <result column="issue_unit" jdbcType="VARCHAR" property="issueUnit" />
+    <result column="issue_unitname" jdbcType="VARCHAR" property="issueUnitname" />
+    <result column="whose" jdbcType="INTEGER" property="whose" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="category" jdbcType="INTEGER" property="category" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="sync_state" jdbcType="INTEGER" property="syncState" />
+    <result column="sync_date" jdbcType="TIMESTAMP" property="syncDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.henan.entity.HnCatalogSync">
+    <result column="license_base_image" jdbcType="LONGVARBINARY" property="licenseBaseImage" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    catalog_no, license_name, license_type, licence_type_code, issue_unit, issue_unitname, 
+    whose, state, category, area_code, create_date, sync_state, sync_date
+  </sql>
+  <sql id="Blob_Column_List">
+    license_base_image
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from hn_catalog_sync
+    where catalog_no = #{catalogNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from hn_catalog_sync
+    where catalog_no = #{catalogNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.henan.entity.HnCatalogSync">
+    insert into hn_catalog_sync (catalog_no, license_name, license_type, 
+      licence_type_code, issue_unit, issue_unitname, 
+      whose, state, category, 
+      area_code, create_date, sync_state, 
+      sync_date, license_base_image)
+    values (#{catalogNo,jdbcType=VARCHAR}, #{licenseName,jdbcType=VARCHAR}, #{licenseType,jdbcType=VARCHAR}, 
+      #{licenceTypeCode,jdbcType=VARCHAR}, #{issueUnit,jdbcType=VARCHAR}, #{issueUnitname,jdbcType=VARCHAR}, 
+      #{whose,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, 
+      #{areaCode,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{syncState,jdbcType=INTEGER}, 
+      #{syncDate,jdbcType=TIMESTAMP}, #{licenseBaseImage,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.henan.entity.HnCatalogSync">
+    insert into hn_catalog_sync
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="catalogNo != null">
+        catalog_no,
+      </if>
+      <if test="licenseName != null">
+        license_name,
+      </if>
+      <if test="licenseType != null">
+        license_type,
+      </if>
+      <if test="licenceTypeCode != null">
+        licence_type_code,
+      </if>
+      <if test="issueUnit != null">
+        issue_unit,
+      </if>
+      <if test="issueUnitname != null">
+        issue_unitname,
+      </if>
+      <if test="whose != null">
+        whose,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="areaCode != null">
+        area_code,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="syncState != null">
+        sync_state,
+      </if>
+      <if test="syncDate != null">
+        sync_date,
+      </if>
+      <if test="licenseBaseImage != null">
+        license_base_image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="catalogNo != null">
+        #{catalogNo,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseName != null">
+        #{licenseName,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseType != null">
+        #{licenseType,jdbcType=VARCHAR},
+      </if>
+      <if test="licenceTypeCode != null">
+        #{licenceTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="issueUnit != null">
+        #{issueUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="issueUnitname != null">
+        #{issueUnitname,jdbcType=VARCHAR},
+      </if>
+      <if test="whose != null">
+        #{whose,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="syncState != null">
+        #{syncState,jdbcType=INTEGER},
+      </if>
+      <if test="syncDate != null">
+        #{syncDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="licenseBaseImage != null">
+        #{licenseBaseImage,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.henan.entity.HnCatalogSync">
+    update hn_catalog_sync
+    <set>
+      <if test="licenseName != null">
+        license_name = #{licenseName,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseType != null">
+        license_type = #{licenseType,jdbcType=VARCHAR},
+      </if>
+      <if test="licenceTypeCode != null">
+        licence_type_code = #{licenceTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="issueUnit != null">
+        issue_unit = #{issueUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="issueUnitname != null">
+        issue_unitname = #{issueUnitname,jdbcType=VARCHAR},
+      </if>
+      <if test="whose != null">
+        whose = #{whose,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="syncState != null">
+        sync_state = #{syncState,jdbcType=INTEGER},
+      </if>
+      <if test="syncDate != null">
+        sync_date = #{syncDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="licenseBaseImage != null">
+        license_base_image = #{licenseBaseImage,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where catalog_no = #{catalogNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.henan.entity.HnCatalogSync">
+    update hn_catalog_sync
+    set license_name = #{licenseName,jdbcType=VARCHAR},
+      license_type = #{licenseType,jdbcType=VARCHAR},
+      licence_type_code = #{licenceTypeCode,jdbcType=VARCHAR},
+      issue_unit = #{issueUnit,jdbcType=VARCHAR},
+      issue_unitname = #{issueUnitname,jdbcType=VARCHAR},
+      whose = #{whose,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      category = #{category,jdbcType=INTEGER},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      sync_state = #{syncState,jdbcType=INTEGER},
+      sync_date = #{syncDate,jdbcType=TIMESTAMP},
+      license_base_image = #{licenseBaseImage,jdbcType=LONGVARBINARY}
+    where catalog_no = #{catalogNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.henan.entity.HnCatalogSync">
+    update hn_catalog_sync
+    set license_name = #{licenseName,jdbcType=VARCHAR},
+      license_type = #{licenseType,jdbcType=VARCHAR},
+      licence_type_code = #{licenceTypeCode,jdbcType=VARCHAR},
+      issue_unit = #{issueUnit,jdbcType=VARCHAR},
+      issue_unitname = #{issueUnitname,jdbcType=VARCHAR},
+      whose = #{whose,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      category = #{category,jdbcType=INTEGER},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      sync_state = #{syncState,jdbcType=INTEGER},
+      sync_date = #{syncDate,jdbcType=TIMESTAMP}
+    where catalog_no = #{catalogNo,jdbcType=VARCHAR}
+  </update>
+  
+  
+</mapper>

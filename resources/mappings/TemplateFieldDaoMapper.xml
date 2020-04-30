@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henan.dao.TemplateFieldDao">
+
+  <select id="selectByParams" parameterType="Map" resultType="TemplateField">
+   SELECT
+		*
+	FROM
+		lic_template_field t1
+	WHERE
+		t1.license_id = (
+			SELECT
+				t2.id
+			FROM
+				lic_license t2
+			INNER JOIN lic_license_data t3 ON t2.`code` = t3.`code`
+			WHERE
+				t3.`code`= #{code} and t3.license_no=#{licenseNo}
+			and t3.canceled=0
+			limit 1
+		)
+  </select>
+</mapper>
