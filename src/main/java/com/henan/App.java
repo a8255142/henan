@@ -18,6 +18,7 @@ public class App
         
         DataService dataService = (DataService)ctx.getBean("dataService");
         dataService.getLicenseData();
+
         System.out.println("Hello World!");
     }
 }
