@@ -34,7 +34,7 @@
         <mysql.driver.version>5.1.37</mysql.driver.version>
         <mongodb.version>3.1.0</mongodb.version>
         <junit.version>4.9</junit.version>
-        <itextpdf.version>5.5.7</itextpdf.version>
+        <itextpdf.version>5.5.12</itextpdf.version>
         <itext-asian.version>5.2.0</itext-asian.version>
         <pdfbox.version>2.0.0-RC1</pdfbox.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
